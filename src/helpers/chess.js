@@ -1,6 +1,6 @@
 
 function calculateBestMove(game) {
-    var newGameMoves = game.ugly_moves();
+    var newGameMoves = game.moves();
     return newGameMoves[Math.floor(Math.random() * newGameMoves.length)];
 };
 
@@ -16,7 +16,7 @@ function makeBestMove() {
     let board = window.board;
     let game = window.game;
     var bestMove = getBestMove(game);
-    game.ugly_move(bestMove);
+    game.move(bestMove);
     board.position(game.fen());
     renderMoveHistory(game.history());
     if (game.game_over()) {
