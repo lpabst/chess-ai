@@ -1,8 +1,8 @@
 {
-  "name": "garage-sale",
+  "name": "chess-ai",
   "version": "0.1.0",
   "main": "server/index.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,6 +13,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "chess.js": "^0.10.2",
+    "chessboardjs": "0.0.1",
     "express": "^4.16.4",
     "massive": "^5.5.1",
     "react": "^16.6.0",
