@@ -1,7 +1,64 @@
 
 function calculateBestMove(game) {
     var newGameMoves = game.moves();
-    return newGameMoves[Math.floor(Math.random() * newGameMoves.length)];
+    var bestMove = null;
+    var bestValue = -999999;
+    // console.log(newGameMoves);
+    for (var i = 0; i < newGameMoves.length; i++) {
+        var newGameMove = newGameMoves[i];
+        game.move(newGameMove);
+        var value = minimax(2, game, true);
+        game.undo();
+        if (value > bestValue) {
+            console.log(value);
+            console.log('found one!')
+            bestValue = value;
+            bestMove = newGameMove
+        }
+    }
+    return bestMove;
+};
+
+function evaluateBoard(game = window.game) {
+    let points = 0;
+    let board = game.fen().split(' ')[0];
+    let piecePoints = {
+        p: 1,
+        n: 3,
+        b: 3,
+        r: 5,
+        q: 9,
+        k: 90,
+        P: -1,
+        N: -3,
+        B: -3,
+        R: -5,
+        Q: -9,
+        K: -90,
+    }
+    for (let i = 0; i < board.length; i++) {
+        let piece = board.charAt(i);
+        let pointsInSquare = piecePoints[piece] || 0;
+        points += pointsInSquare;
+    }
+    // console.log(board)
+    // console.log(points);
+    return points;
+}
+
+// TODO: this is currently really slow. Need to speed it up a bit
+function minimax(depth, game, isMaximisingPlayer) {
+    if (depth === 0) return evaluateBoard();
+    var newGameMoves = game.moves();
+    var bestMove = isMaximisingPlayer ? -99999 : 99999;
+    for (var i = 0; i < newGameMoves.length; i++) {
+        game.move(newGameMoves[i]);
+        bestMove = isMaximisingPlayer
+            ? Math.max(bestMove, minimax(depth - 1, game, !isMaximisingPlayer))
+            : Math.min(bestMove, minimax(depth - 1, game, !isMaximisingPlayer))
+        game.undo();
+    }
+    return bestMove;
 };
 
 function onDragStart(source, piece, position, orientation) {

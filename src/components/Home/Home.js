@@ -34,7 +34,6 @@ class Home extends Component {
     board.start();
     window.game = game;
     window.board = board;
-    console.log(game);
 
     this.setState({ board, game })
   }
